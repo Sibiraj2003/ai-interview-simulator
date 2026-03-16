@@ -1,48 +1,22 @@
-from transformers import pipeline
+from groq import Groq
 
-feedback_model = pipeline(
-    "text-generation",
-    model="google/flan-t5-base"
-)
+client = Groq()
 
-
-def generate_feedback(question, expected_answer, user_answer, score):
+def generate_feedback(question, answer):
 
     prompt = f"""
-You are a technical interviewer.
+    Interview Question:
+    {question}
 
-Question:
-{question}
+    Candidate Answer:
+    {answer}
 
-Expected Answer:
-{expected_answer}
+    Provide short interview feedback.
+    """
 
-Candidate Answer:
-{user_answer}
-
-Score: {score}/10
-
-Give short constructive feedback.
-Mention what was correct and what is missing.
-"""
-
-    result = feedback_model(
-        prompt,
-        max_new_tokens=120,
-        temperature=0.7,
-        do_sample=True
+    response = client.chat.completions.create(
+        model="llama3-8b-8192",
+        messages=[{"role": "user", "content": prompt}]
     )
 
-    text = result[0]["generated_text"]
-    feedback = text.replace(prompt, "").strip()
-
-    # fallback if model returns nothing
-    if feedback == "":
-        if score > 8:
-            feedback = "Good answer. You covered the key idea, but you could add more explanation."
-        elif score > 5:
-            feedback = "Your answer is partially correct but lacks explanation."
-        else:
-            feedback = "Your answer is too short or incorrect. Review the concept and try again."
-
-    return feedback
+    return response.choices[0].message.content
