@@ -1,0 +1,32 @@
+{
+    "python": [
+      {
+        "type": "theory",
+        "question": "What is a Python decorator?",
+        "answer": "A decorator wraps a function to extend or modify its behavior."
+      },
+      {
+        "type": "theory",
+        "question": "What is the difference between list and tuple?",
+        "answer": "Lists are mutable while tuples are immutable."
+      },
+      {
+        "type": "coding",
+        "question": "Write a Python function to reverse a string.",
+        "answer": "Use slicing: string[::-1]"
+      }
+    ],
+  
+    "dsa": [
+      {
+        "type": "theory",
+        "question": "What is the time complexity of binary search?",
+        "answer": "O(log n)"
+      },
+      {
+        "type": "coding",
+        "question": "Write a function to find the maximum element in an array.",
+        "answer": "Iterate through array and track the maximum value."
+      }
+    ]
+  }
